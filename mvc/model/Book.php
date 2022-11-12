@@ -7,16 +7,18 @@ class Book
    public $price;
    public $year;
    public $cover;
+   public $quantity;
 
    //constructor - special function
    //public function Book() { }
-   public function __construct($t, $a, $p, $y, $c)
+   public function __construct($t, $a, $p, $y, $c, $quantity)
    {
       $this->title = $t;
       $this->author = $a;
       $this->price = $p;
       $this->year = $y;
       $this->cover = $c;
+      $this->quantity = $quantity;
    }
 
    //getter
