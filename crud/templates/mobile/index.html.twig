@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Mobile index
+{% endblock %}
+
+{% block body %}
+  <div class="container col-md-10 text-center mt-3">
+    <h1 class="alert alert-success">Mobile index</h1>
+
+    <table class="table table-danger">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Giá tiền</th>
+          <th>Số lượng</th>
+          <th>Tổng tiền</th>
+          <th>Color</th>
+          <th>Ảnh</th>
+          <th>Ngày sản xuất</th>
+          <th>Sản phẩm bán chạy</th>
+          <th>Menu</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mobile in mobiles %}
+          <tr>
+            <td>{{ mobile.id }}</td>
+            <td>{{ mobile.name }}</td>
+            <td>$ {{ mobile.price }}</td>
+            <td>{{ mobile.quantity }}</td>
+            {% set total = mobile.price * mobile.quantity %}
+            <td>$ {{ total }}</td>
+
+            <td>{{ mobile.color }}</td>
+            <td>
+              <img src="{{ mobile.image }}" width="100" height="100" />
+            </td>
+            <td>{{ mobile.date ? mobile.date|date('d/m/Y') : '' }}</td>
+            <td>{{ mobile.bestseller ? 'Yes' : 'No' }}</td>
+            <td>
+              <a class="btn btn-outline-primary" href="{{ path('app_mobile_show', { id: mobile.id }) }}">show</a>
+              <a class="btn btn-outline-success" href="{{ path('app_mobile_edit', { id: mobile.id }) }}">edit</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="9">no records found</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <a class="btn btn-outline-danger" href="{{ path('app_mobile_new') }}">Create new</a>
+  </div>
+{% endblock %}
