@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  {# "path" : redirect sang web page khác dự trên 
+route name trong controller #}
+  <h2><a href="{{ path('home') }}" onclick="return xacnhan();">Back to home</a></h2>
+  <h1 style="color: red">Greenwich University</h1>
+
+  {# "asset" dùng để gọi đến thư mục public (chứa tài nguyên của web
+bao gồm css, js, images, video, audio, pdf, word, ...) #}
+  <img src="{{ asset('images/green.jpg') }}" width="300" height="300" />
+{% endblock %}
