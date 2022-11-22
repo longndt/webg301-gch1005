@@ -6,9 +6,11 @@ use App\Entity\Blog;
 use App\Repository\BlogRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Runtime\Symfony\Component\HttpFoundation\RequestRuntime;
 
 class BlogController extends AbstractController
 {
@@ -95,7 +97,7 @@ class BlogController extends AbstractController
         return new Response(
             $success,
             Response::HTTP_ACCEPTED, 
-            //202 . Note: nếu sử dụng code 201 (HTTP_NO_CONTENT) thì sẽ không hiển thị được message
+            //202 . Note: nếu sử dụng code 204 (HTTP_NO_CONTENT) thì sẽ không hiển thị được message
             [
                 'content-type' => 'text/html'
             ]
@@ -105,13 +107,67 @@ class BlogController extends AbstractController
     //Note: có thể set cùng 1 route url cho nhiều function khác nhau
     //với điều kiện là method khác nhau (chỉ áp dụng cho API)
     #[Route('/', methods: ['POST'], name: 'add_new_blog')]
-    public function addNewBlog()
+    public function addNewBlog(Request $request)
     {
+        //khởi tạo empty object cho Blog 
+        $blog = new Blog;
+        //lấy dữ liệu từ request của client
+        $json = $request->getContent();
+        //decode dữ liệu của json (key + value)
+        $data = json_decode($json, true);
+        //set giá trị cho từng thuộc tính của object
+        $blog->setAuthor($data['author']);
+        $blog->setContent($data['content']);
+        $blog->setTitle($data['title']);
+        $blog->setDatetime(\DateTime::createFromFormat('Y-m-d H:i:s', $data['datetime']));
 
+        $manager = $this->registry->getManager();
+        $manager->persist($blog);
+        $manager->flush();
+        $success = "<center><h1 style='color:blue;'><i>Blog has been created !</i></h1></center>";
+        return new Response(
+            $json,
+            Response::HTTP_CREATED, //code: 201
+            [
+                'content-type' => 'application/json'
+            ]
+        );
     }
 
     #[Route('/{id}', methods: ['PUT'], name: 'update_blog')]
-    public function updateBlog($id) {
-        
+    public function updateBlog($id, Request $request) {
+        //khởi tạo object cho Blog theo id trên URL
+        $blog = $this->blogRepository->find($id);
+        if ($blog == null) {
+            $error = "<center><h1 style='color:red;'><i>Blog is not exited !</i></h1></center>";
+            return new Response(
+                $error,
+                Response::HTTP_BAD_REQUEST,  //400
+                [
+                    'content-type' => 'text/html'
+                ]
+            );
+        }
+        //lấy dữ liệu từ request của client
+        $json = $request->getContent();
+        //decode dữ liệu của json (key + value)
+        $data = json_decode($json, true);
+        //set giá trị cho từng thuộc tính của object
+        $blog->setAuthor($data['author']);
+        $blog->setContent($data['content']);
+        $blog->setTitle($data['title']);
+        $blog->setDatetime(\DateTime::createFromFormat('Y-m-d H:i:s', $data['datetime']));
+
+        $manager = $this->registry->getManager();
+        $manager->persist($blog);
+        $manager->flush();
+        $success = "<center><h1 style='color:blue;'><i>Blog has been updated !</i></h1></center>";
+        return new Response(
+            $success,
+            Response::HTTP_ACCEPTED, //code: 202
+            [
+                'content-type' => 'text/html'
+            ]
+        );
     }
 }
