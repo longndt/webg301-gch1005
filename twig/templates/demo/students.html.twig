@@ -1,0 +1,14 @@
+<table border=2>
+	<tr>
+		<th>Student No.</th>
+		<th>Student Name</th>
+	</tr>
+   {% set i = 1 %}
+	{% for s in students %}
+		<tr>
+			<th>{{ i }}</th>
+			<th>{{ s }}</th>
+		</tr>
+      {% set i = i+1 %}
+	{% endfor %}
+</table>

@@ -1,0 +1,41 @@
+<table border="1">
+	<tr>
+		<th>School</th>
+		<td>{{ school }}</td>
+	</tr>
+	<tr>
+		<th>Subject</th>
+		<td>{{ subject }}</td>
+	</tr>
+	<tr>
+		<th>Semester</th>
+		<td>{{ hocky }}</td>
+
+	</tr>
+	<tr>
+		<th>Framework</th>
+		<td>{{ framework }}</td>
+	</tr>
+	<tr>
+		<th>Total slots</th>
+		<td>{{ quantity }}</td>
+	</tr>
+	<tr>
+		<th>Point</th>
+		<td>{{ point }}</td>
+	</tr>
+	<tr>
+		<th>Grade</th>
+		<td>{{ grade }}</td>
+	</tr>
+	<tr>
+		<th>Result</th>
+		<td>
+         {% if pass == 1 %}
+            Pass
+         {% else %}
+            Fail
+         {% endif %}
+      </td>
+	</tr>
+</table>
