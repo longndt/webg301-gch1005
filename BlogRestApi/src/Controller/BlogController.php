@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Blog;
 use App\Repository\BlogRepository;
-use LDAP\Result;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +14,12 @@ class BlogController extends AbstractController
 {
     //Cách 1: khai báo SerializerInterface sử dụng constructor
     private $blogRepository;
+    private $registry;
 
-    public function __construct(BlogRepository $blogRepository)
+    public function __construct(BlogRepository $blogRepository, ManagerRegistry $managerRegistry)
     {
         $this->blogRepository = $blogRepository;
+        $this->registry = $managerRegistry;
     }
 
     //SQL: SELECT * FROM Blog
@@ -45,7 +48,8 @@ class BlogController extends AbstractController
     #[Route('/{id}', methods: 'GET', name: 'view_blog_by_id')]
     public function viewBlogById($id, SerializerInterface $serializer)
     {
-        $blog = $this->blogRepository->find($id);
+        //$blog = $this->blogRepository->find($id);
+        $blog = $this->registry->getManager()->getRepository(Blog::class)->find($id);
         //check xem id có tồn tại trong DB không => $blog có null hay không
         if ($blog == null) {
             $error = "<center><h1 style='color:red;'><i>Blog not found !</i></h1></center>";
@@ -61,19 +65,53 @@ class BlogController extends AbstractController
         $json = $serializer->serialize($blog, 'json');
         return new Response(
             $json,
-            Response::HTTP_OK,
+            Response::HTTP_OK, //200
             [
                 'content-type' => 'application/json'
             ]
         );
     }
 
-
+    //SQL: DELETE FROM Blog WHERE id = '$id'
+    #[Route('/{id}', methods: 'DELETE', name: 'delete_blog')]
+    public function deleteBlog($id)
+    {
+        $blog = $this->blogRepository->find($id);
+        if ($blog == null) {
+            $error = "<center><h1 style='color:red;'><i>Blog is not exited !</i></h1></center>";
+            return new Response(
+                $error,
+                Response::HTTP_BAD_REQUEST,  //400
+                [
+                    'content-type' => 'text/html'
+                ]
+            );
+        }
+        //khai báo entity manager để thực hiện thao tác xóa dữ liệu trong DB
+        $manager = $this->registry->getManager();
+        $manager->remove($blog);
+        $manager->flush();
+        $success = "<center><h1 style='color:blue;'><i>Blog has been deleted !</i></h1></center>";
+        return new Response(
+            $success,
+            Response::HTTP_ACCEPTED, 
+            //202 . Note: nếu sử dụng code 201 (HTTP_NO_CONTENT) thì sẽ không hiển thị được message
+            [
+                'content-type' => 'text/html'
+            ]
+        );
+    }
 
     //Note: có thể set cùng 1 route url cho nhiều function khác nhau
-    //với điều kiện là method khác nhau
+    //với điều kiện là method khác nhau (chỉ áp dụng cho API)
     #[Route('/', methods: ['POST'], name: 'add_new_blog')]
-    public function createNewBlog()
+    public function addNewBlog()
     {
+
+    }
+
+    #[Route('/{id}', methods: ['PUT'], name: 'update_blog')]
+    public function updateBlog($id) {
+        
     }
 }
