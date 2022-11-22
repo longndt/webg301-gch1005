@@ -1,0 +1,62 @@
+{% set gw = "Greenwich Vietnam" %}
+<h1 style="color: blue;">{{ gw }}</h1>
+{% set a = 15 %}
+{% set b = 15 %}
+{% set c = a+b %}
+<h1>{{a}}
+	+
+	{{b}}
+	=
+	{{ a+b }}</h1>
+{% if a>b %}
+	<h1>a is greater than b</h1>
+{% elseif b>a  %}
+	<h1>b is greater than a</h1>
+{% else %}
+	<h1>a is equal to b</h1>
+{% endif %}
+{% set x = 3 %}
+{% set y = 4 %}
+{% set z = 2 %}
+{% if x>=y and x>=z %}
+	<h1>x is max</h1>
+{% elseif y>=x and y>=z %}
+	<h1>y is max</h1>
+{% else %}
+	<h1>z is max</h1>
+{% endif %}
+<h1>Min is:{{ min(x,y,z) }}</h1>
+{% for i in 1..20 %}
+	{% if i%2==0 %}
+		{{ i }}
+	{% endif %}
+{% endfor %}
+<br>
+{% for a in range(1,30,3) %}
+	{{ a }}
+<br>
+{% endfor %}
+{% for character in range('a','z') %}
+	{{ character }}
+{% endfor %}
+
+<br>
+Random number: {{ random(1,30) }}
+<br>
+Random character:
+{{ random('ABCDEFGHIJKLMN') }}
+<br>
+
+{% set hanoi = "Hanoi" %}
+Upper case: {{hanoi | upper}}
+<br>
+{% set sports = ['football', 'badminton', 'voleyball', 'swimming'] %}
+Random item from list: {{ random(sports) }}
+<br>
+{# Display item from list #}
+{% for s in sports %}
+    {{ s }} 
+{% endfor %}
+<br>
+Total items in list: {{ sports | length}}
+ 
