@@ -1,31 +1,31 @@
-<center>
-	<form action="{{ path('output1') }}" method="post">
-		<fieldset style="width: fit-content;">
-			<legend style="font-weight: bold; color: red">CUSTOMER REGISTRATION</legend>
-			Salutation:
-			<select name="salutation" id="">
-				<option>--None--</option>
-				<option value="Mr">Mr.</option>
-				<option value="Ms">Ms.</option>
-			</select>
-			<br><br>
-			Name:
-			<input type="text" name="name" required>
-			<br><br>
-			Gender:
-			<input type="radio" name="gender" value="Male" required>
-			Male
-			<input type="radio" name="gender" value="Female" required>
-			Female
-			<br><br>
-         Email: <input type="email" name="email" required>
-         <br><br>
-         Birthday: <input type="date" name="dob" required>
-         <br><br>
-         Address: <textarea name="address" cols="30" rows="10">
-         </textarea>
-         <br><br>
-			<input type="submit" value="Register">
-		</fieldset>
-	</form>
-</center>
+<form action="{{ path('output1') }}" method="post">
+	<fieldset style="width: fit-content;">
+		<legend style="font-weight: bold; color: red">CUSTOMER REGISTRATION</legend>
+		Salutation:
+		<select name="salutation" required>
+			<option value="N/A">--None--</option>
+			<option value="Mr.">Mr.</option>
+			<option value="Ms.">Ms.</option>
+		</select>
+		<br><br>
+		Name:
+		<input type="text" name="name" required>
+		<br><br>
+		Gender:
+		<input type="radio" name="gender" value="Male" required>
+		Male
+		<input type="radio" name="gender" value="Female" required>
+		Female
+		<br><br>
+		Email:
+		<input type="email" name="email" required>
+		<br><br>
+		Birthday:
+		<input type="date" name="dob" required>
+		<br><br>
+		Address:
+		<br><textarea name="address" cols="30" rows="5"></textarea>
+		<br><br>
+		<input type="submit" value="Register">
+	</fieldset>
+</form>

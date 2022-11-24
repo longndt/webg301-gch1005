@@ -59,7 +59,7 @@ class FormController extends AbstractController
                 'gender' => $request->get('gender'),
                 'email' => $request->get('email'),
                 'dob' => $request->get('dob'),
-                'address' => $request->get('address'),
+                'address' => $request->get('address')
             ]
         );
     }
