@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container bg-info mt-4">
+		<a href="{{ path('homepage')}}">
+			<h1 class="btn btn-danger">Back to home</h1>
+		</a>
+
+
+		{% for mobile in mobile_list %}
+			<h3 class="text-bg-success">{{ mobile }}</h3>
+
+		{% endfor %}
+		<br>
+		<h1>Product Name:
+			{{ name }}</h1>
+		<h1>Product Quantity:
+			{{ quantity }}</h1>
+		<h1>Best Seller:
+			{% if best_seller %}
+				Yes
+			{% else %}
+				No
+			{% endif %}
+			<h1>Order Date:
+				{{ order | date('d/m/Y') }}</h1>
+			<h1>Product Image:
+				<img src="{{ asset('images/laptop/'~image) }} " width="200" height="200">
+
+			</h1>
+		</h1>
+	</div>
+
+{% endblock %}

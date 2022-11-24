@@ -14,7 +14,7 @@ class DemoController extends AbstractController
         return $this->render('demo/index.html.twig');
     }
 
-    #[Route('/')]
+    #[Route('/', name: 'homepage')]
     public function demo()
     {
         $school = "University of Greenwich (Vietnam)";

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container col-md-3 text-center mt-3">
+		<table class="table table-secondary">
+			<tr>
+				<th>Name</th>
+				<th>Birthday</th>
+				<th>Grade</th>
+				<th>Image</th>
+			</tr>
+			<tr>
+				<th>{{ student.name }}</th>
+				<th>{{ student.date | date('d/m/Y') }}</th>
+				<th>{{ student.grade }}</th>
+				<th><img src="{{ asset('images/student/'~student.image) }}" width="100" height="100"></th>
+			</tr>
+		</table>
+	</div>
+
+{% endblock %}
