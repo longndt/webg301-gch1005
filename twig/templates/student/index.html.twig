@@ -4,17 +4,21 @@
 	<div class="container col-md-3 text-center mt-3">
 		<table class="table table-secondary">
 			<tr>
+				<th>Id</th>
 				<th>Name</th>
 				<th>Birthday</th>
 				<th>Grade</th>
 				<th>Image</th>
 			</tr>
-			<tr>
-				<th>{{ student.name }}</th>
-				<th>{{ student.date | date('d/m/Y') }}</th>
-				<th>{{ student.grade }}</th>
-				<th><img src="{{ asset('images/student/'~student.image) }}" width="100" height="100"></th>
-			</tr>
+			{% for student in students %}
+				<tr>
+					<th>{{ student.id }}</th>
+					<th>{{ student.name }}</th>
+					<th>{{ student.date | date('d/m/Y') }}</th>
+					<th>{{ student.grade }}</th>
+					<th><img src="{{ asset('images/student/'~student.image) }}" width="100" height="100"></th>
+				</tr>
+			{% endfor %}
 		</table>
 	</div>
 

@@ -26,6 +26,12 @@ class Student
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
