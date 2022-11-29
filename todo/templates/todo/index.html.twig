@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container col-md-6 text-center mt-5 mb-5">
+	<table class="table table-primary">
+		<tr>
+			<th colspan="4" class="h1 text text-danger">Todo List</th>
+		</tr>
+		<tr class="text text-success">
+			<th>Id</th>
+			<th>Name</th>
+			<th>Deadline</th>
+			<th>Menu</th>
+		</tr>
+		{% for todo in todos %}
+			<tr>
+				<td>{{ todo.id }}</td>
+				<td>{{ todo.name }}</td>
+				<td>{{ todo.duedate | date('d/m/Y')}}</td>
+				<td>
+                    <a class="btn btn-outline-info" href="#">View</a>
+                    <a class="btn btn-outline-warning" href="#">Edit</a>
+                    <a class="btn btn-outline-danger" href="#" 
+                    onclick="return confirm('Are you sure to delete this todo ?');"
+                    >Delete</a>
+                </td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{% endblock %}
