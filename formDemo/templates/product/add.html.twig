@@ -1,0 +1,20 @@
+{# tự động format form bằng bootstrap #}
+{% form_theme productForm 'bootstrap_5_layout.html.twig' %}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container col-md-7 text-center mt-3 mb-3 card p-3 bg-light">
+   <h1 class="text text-primary card bg-info">Add new product</h1>
+	{# Nếu chỉ muốn load form ra view thì dùng {{ form }}
+	  Còn nếu muốn chèn thêm nội dung vào form thì dùng
+	{{ form_start }}, {{ form_widget }} & {{ form_end }} #}
+
+	{{ form_start (productForm) }}
+
+	{{ form_widget (productForm) }}
+	<input type="submit" value="Add" class="btn btn-danger">
+
+	{{ form_end (productForm) }}
+</div>
+{% endblock %}
