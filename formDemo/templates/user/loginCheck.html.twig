@@ -1,7 +1,8 @@
 {# <h1>Username: {{ user.username }}</h1>
 <h1>Password: {{ user.password }}</h1> #}
 
-{% if user.username == "admin" and user.password == "123456" %}
+{% if user.username == "admin" and user.password == "123456" and user.repeat == "123456"%}
+
 	<h1 style="color: red; background: yellow;">Login succeed !</h1>
 {% else %}
 	<h1 style="color: red; background: yellow;">Login failed !</h1>
