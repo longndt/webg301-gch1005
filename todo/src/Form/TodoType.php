@@ -34,7 +34,8 @@ class TodoType extends AbstractType
             [
                 'attr' => [
                     'minlength' => 5,
-                    'maxlength' => 50
+                    'maxlength' => 50,
+                    'placeholder' => 'Enter description here'
                 ]
             ])
             ->add('priority', IntegerType::class,
