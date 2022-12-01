@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/movie')]
 class MovieController extends AbstractController
 {
-    private $movieRepository, $manager, $request;
+    private $repository, $manager, $request;
 
     public function __construct(MovieRepository $movieRepository, ManagerRegistry $managerRegistry, Request $request)
     {
-        $this->movieRepository = $movieRepository;
+        $this->repository = $movieRepository;
         $this->manager = $managerRegistry->getManager();
         $this->request = $request; 
     }
@@ -24,7 +24,7 @@ class MovieController extends AbstractController
     #[Route('/', name: 'movie_index')]
     public function index()
     {
-        $movies = $this->movieRepository->findAll();
+        $movies = $this->repository->findAll();
         return $this->render('movie/index.html.twig', 
         [
             'movies' => $movies
@@ -33,7 +33,7 @@ class MovieController extends AbstractController
 
     #[Route('/detail/{id}', name: 'movie_detail' )]
     public function detail($id) {
-        $movie = $this->movieRepository->find($id);
+        $movie = $this->repository->find($id);
         return $this->render('movie/detail.html.twig',
         [
             'movie' => $movie
@@ -42,7 +42,7 @@ class MovieController extends AbstractController
 
     #[Route('/delete/{id}', name: 'movie_delete')]
     public function delete($id) {
-        $movie = $this->movieRepository->find($id);
+        $movie = $this->repository->find($id);
         $this->manager->remove($movie);
         return $this->redirectToRoute('movie_index');
     }
