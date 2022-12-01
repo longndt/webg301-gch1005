@@ -12,13 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/movie')]
 class MovieController extends AbstractController
 {
-    private $repository, $manager, $request;
+    private $repository, $manager;
 
-    public function __construct(MovieRepository $movieRepository, ManagerRegistry $managerRegistry, Request $request)
+    public function __construct(MovieRepository $movieRepository, ManagerRegistry $managerRegistry)
     {
         $this->repository = $movieRepository;
         $this->manager = $managerRegistry->getManager();
-        $this->request = $request; 
+        //$this->request = $request; 
     }
 
     #[Route('/', name: 'movie_index')]
@@ -44,6 +44,7 @@ class MovieController extends AbstractController
     public function delete($id) {
         $movie = $this->repository->find($id);
         $this->manager->remove($movie);
+        $this->manager->flush();
         return $this->redirectToRoute('movie_index');
     }
 }

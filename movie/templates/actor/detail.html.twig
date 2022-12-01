@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container text-center col-md-7 mt-3">
+		<div class="row">
+			<div class="col">
+				<img src="{{ actor.image }}" width="300" height="300">
+			</div>
+			<div class="col">
+				<table class="table-bordered">
+					<tr>
+						<th colspan="2">{{ actor.name }}</th>
+					</tr>
+					<tr>
+						<th>Birthday</th>
+						<td>{{ actor.dob | date('d/m/Y') }}</td>
+					</tr>
+					<tr>
+						<th>Nationality</th>
+						<td>{{ actor.nationality }}</td>
+					</tr>
+					<tr>
+						<th>Movie(s)</th>
+						<td>
+							{% for movie in actor.movies %}
+								<img src="{{ movie.image }}" width="80" height="80">
+							{% endfor %}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
