@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Todo;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,6 +18,7 @@ class TodoType extends AbstractType
             ->add('description')
             ->add('priority')
             ->add('duedate')
+            //->add('OK', SubmitType::class)
         ;
     }
 

@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container text-center mt-3 mb-3">
+		<table class="table table-info">
+			<tr>
+				<th colspan="2" class="h3 text text-bg-warning">Todo Detail</th>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td>{{ todo.name }}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td>{{ todo.category }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ todo.description }}</td>
+			</tr>
+			<tr>
+				<th>Priority</th>
+				<td>{{ todo.priority }}</td>
+			</tr>
+			<tr>
+				<th>Deadline</th>
+				<td>{{ todo.duedate | date('d/m/Y') }}</td>
+			</tr>
+		</table>
+	</div>
+{% endblock %}

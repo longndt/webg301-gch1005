@@ -1,0 +1,15 @@
+{% form_theme TodoForm 'bootstrap_5_layout.html.twig' %}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-6 text-center mt-3 mb-3 card bg-warning">
+	<h3 class="text text-bg-success">Edit Todo</h3>
+   {{ form_start (TodoForm) }}
+
+	{{ form_widget (TodoForm) }}
+	<input class="btn btn-primary" type="submit" value="Edit">
+	{{ form_end (TodoForm) }}
+</div>
+
+{% endblock %}
