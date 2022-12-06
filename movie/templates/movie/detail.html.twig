@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container text-center col-md-7 mt-3">
+		<div class="row">
+			<div class="col">
+				<img src="{{ movie.image }}" width="300" height="300">
+			</div>
+			<div class="col">
+				<table class="table-bordered">
+					<tr>
+						<th colspan="2">{{ movie.name }}</th>
+					</tr>
+					<tr>
+						<th>Published Date</th>
+						<td>{{ movie.date | date('d-m-Y') }}</td>
+					</tr>
+					{% for actor in movie.actors %}
+						<tr>
+							<td>
+								{{ actor.name }}
+							</td>
+							<td>
+								<a href="{{ path('actor_detail', {'id' : actor.id })}}">
+									<img src="{{ actor.image }}" width="80" height="80">
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

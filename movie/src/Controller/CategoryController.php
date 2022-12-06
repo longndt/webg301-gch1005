@@ -14,9 +14,10 @@ class CategoryController extends AbstractController
 {
     private $repository, $manager, $request;
 
-    public function __construct(CategoryRepository $categoryRepository, 
-    ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        ManagerRegistry $managerRegistry
+    ) {
         $this->repository = $categoryRepository;
         $this->manager = $managerRegistry->getManager();
         //$this->request = $request;
@@ -25,11 +26,11 @@ class CategoryController extends AbstractController
     #[Route('/', name: 'category_index')]
     public function index()
     {
-        $categorys = $this->repository->findAll();
+        $categories = $this->repository->findAll();
         return $this->render(
             'category/index.html.twig',
             [
-                'categorys' => $categorys
+                'categories' => $categories
             ]
         );
     }
@@ -50,11 +51,21 @@ class CategoryController extends AbstractController
     public function delete($id)
     {
         $category = $this->repository->find($id);
-        //check xem còn movie trong category hay không trước khi xóa
-        if (count($category->getMovies()) == 0) {
-            $this->manager->remove($category);
-            $this->manager->flush();
+        $movies = $category->getMovies();
+        //PA1: không cho xóa category nếu category đấy vẫn còn movie
+        //PA2: xóa category và set category cho các movie liên quan thành null
+        
+        //PA3: xóa category và xóa toàn bộ các movie liên quan
+        if (count($movies) > 0) {
+            for ($i = 0; $i <= count($movies); $i++) {
+                $this->manager->remove($movies[$i]);
+                $this->manager->flush();
+            }
         }
+        $this->manager->remove($category);
+        $this->manager->flush();
+        $this->addFlash('Message', 'Delete category succeed !');
+        //redirect về trang category index kể cả xóa thành công hay lỗi
         return $this->redirectToRoute('category_index');
     }
 }

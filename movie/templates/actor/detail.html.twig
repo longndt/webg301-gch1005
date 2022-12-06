@@ -23,7 +23,9 @@
 						<th>Movie(s)</th>
 						<td>
 							{% for movie in actor.movies %}
-								<img src="{{ movie.image }}" width="80" height="80">
+								<a href="{{ path('movie_detail', {'id' : movie.id })}}">
+									<img src="{{ movie.image }}" width="80" height="80">
+								</a>
 							{% endfor %}
 						</td>
 					</tr>
@@ -31,5 +33,4 @@
 			</div>
 		</div>
 	</div>
-
 {% endblock %}

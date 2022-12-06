@@ -4,7 +4,7 @@
 	<div class="container text-center col-md-8 mt-3">
 		<table class="table table-bordered">
 			<tr>
-				<th colspan="5" class="text-bg-warning">MOVIE LIST</th>
+				<th colspan="6" class="text-bg-warning">MOVIE LIST</th>
 			</tr>
 			<tr>
 				<th>Movie Id</th>
@@ -12,6 +12,7 @@
 				<th>Movie Image</th>
 				<th>Movie Category</th>
 				<th>Movie Actor(s)</th>
+				<th>Movie Director</th>
 			</tr>
 			{% for movie in movies %}
 				<tr>
@@ -28,6 +29,7 @@
 							<br><br>
 						{% endfor %}
 					</td>
+					<td>{{ movie.director.name }}</td>
 				</tr>
 			</tr>
 		{% endfor %}
