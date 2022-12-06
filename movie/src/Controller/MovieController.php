@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
+use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 #[Route('/movie')]
 class MovieController extends AbstractController
@@ -18,7 +21,6 @@ class MovieController extends AbstractController
     {
         $this->repository = $movieRepository;
         $this->manager = $managerRegistry->getManager();
-        //$this->request = $request; 
     }
 
     #[Route('/', name: 'movie_index')]
@@ -46,5 +48,23 @@ class MovieController extends AbstractController
         $this->manager->remove($movie);
         $this->manager->flush();
         return $this->redirectToRoute('movie_index');
+    }
+
+    #[Route('/add', name: 'add_movie')]
+    public function add(Request $request) {
+        $movie = new Movie;
+        $form = $this->createForm(MovieType::class, $movie);
+        $form->add('Add', SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->manager->persist($movie);
+            $this->manager->flush();
+            $this->addFlash('Message','Add movie succeed !');
+            return $this->redirectToRoute('movie_index');
+        }
+        return $this->renderForm('movie/add.html.twig',
+        [
+            'movieForm' => $form
+        ]);
     }
 }

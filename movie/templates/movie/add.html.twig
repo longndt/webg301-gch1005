@@ -1,0 +1,10 @@
+{% form_theme movieForm 'bootstrap_5_layout.html.twig' %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container text-center col-md-6 mt-3 mb-3 card bg-light">
+   <h1 class="text text-bg-success">Add new movie</h1>
+   {{ form (movieForm)}}
+</div>
+
+{% endblock %}
