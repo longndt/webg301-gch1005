@@ -26,7 +26,8 @@ class MovieController extends AbstractController
     #[Route('/', name: 'movie_index')]
     public function index()
     {
-        $movies = $this->repository->findAll();
+        //$movies = $this->repository->findAll();
+        $movies = $this->repository->sortNewestToOldest();
         return $this->render('movie/index.html.twig', 
         [
             'movies' => $movies
@@ -66,5 +67,38 @@ class MovieController extends AbstractController
         [
             'movieForm' => $form
         ]);
+    }
+
+    #[Route('/asc', name: 'sort_movie_name_ascending')]
+    public function sortNameAscending() {
+        $movies = $this->repository->sortNameAsc();
+        return $this->render('movie/index.html.twig',
+        [
+            'movies' => $movies
+        ]);
+    }
+
+    #[Route('/desc', name: 'sort_movie_name_descending')]
+    public function sortNameDescending()
+    {
+        $movies = $this->repository->sortNameDesc();
+        return $this->render(
+            'movie/index.html.twig',
+            [
+                'movies' => $movies
+            ]
+        );
+    }
+
+    #[Route('/search', name: 'search_movie_title')]
+    public function searchMovie (Request $request) {
+        $title = $request->get('keyword');
+        $movies = $this->repository->searchMovieByTitle($title);
+        return $this->render(
+            'movie/index.html.twig',
+            [
+                'movies' => $movies
+            ]
+        );
     }
 }

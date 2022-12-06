@@ -1,37 +1,64 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container text-center col-md-8 mt-3">
-		<table class="table table-bordered">
-			<tr>
-				<th colspan="6" class="text-bg-warning">MOVIE LIST</th>
-			</tr>
-			<tr>
-				<th>Movie Id</th>
-				<th>Movie Name</th>
-				<th>Movie Image</th>
-				<th>Movie Category</th>
-				<th>Movie Actor(s)</th>
-				<th>Movie Director</th>
-			</tr>
-			{% for movie in movies %}
-				<tr>
-					<td>{{ movie.id }}</td>
-					<td>{{ movie.name }}</td>
-					<td><img src="{{ movie.image }}" width="100" height="100"></td>
-					<td>
-						<a class="btn btn-info" href="{{ path('category_detail', {'id' : movie.category.id })}}">{{ movie.category.name }}</a>
-					</td>
-					<td>
-						{% for actor in movie.actors %}
-							<a class="btn btn-success" href="{{ path('actor_detail', {'id': actor.id })}}">{{ actor.name }}
-							</a>
-							<br><br>
-						{% endfor %}
-					</td>
-					<td>{{ movie.director.name }}</td>
-				</tr>
-			</tr>
+<div class="container text-center col-md-8 mt-3">
+   {% if movies | length == 0 %}
+		<div class="text text-bg-success">NO MOVIE FOUND</div>
+	{% else %}
+	<table class="table table-bordered">
+		<tr>
+			<th colspan="6" class="text-bg-warning">MOVIE LIST ({{ movies | length }})</th>
+		</tr>
+		<tr>
+			<th colspan="3">
+				Search by movie title:
+				<form action="{{ path('search_movie_title')}}" method="post">
+					<input class="form-control" type="search" name="keyword">
+				</form>
+			</th>
+			<th colspan="3">
+				Sort by movie title:
+				<select class="form-control" onchange="window.location.href = this.value">
+					<option>Select one</option>
+					<option value="{{ path('sort_movie_name_ascending') }}">Ascending</option>
+					<option value="{{ path('sort_movie_name_descending') }}">Descending</option>
+				</select>
+			</th>
+		</tr>
+		<tr>
+			<th>Movie Id</th>
+			<th>
+				<a class="text-decoration-none" href="{{ path('sort_movie_name_ascending') }}">
+					<i class="bi bi-arrow-down-square-fill"></i>
+				</a>
+				Movie Title
+				<a class="text-decoration-none" href="{{ path('sort_movie_name_descending') }}">
+					<i class="bi bi-arrow-up-square-fill"/></i>
+           </a>
+
+			</th>
+			<th>Movie Image</th>
+			<th>Movie Category</th>
+			<th>Movie Actor(s)</th>
+			<th>Movie Director</th>
+		</tr>
+{% for movie in movies %}
+<tr>
+	<td>{{ movie.id }}</td>
+	<td>{{ movie.name }}</td>
+	<td><img src="{{ movie.image }}" width="100" height="100"></td>
+	<td>
+		<a class="btn btn-info" href="{{ path('category_detail', {'id' : movie.category.id })}}">{{ movie.category.name }}</a>
+	</td>
+	<td>
+		{% for actor in movie.actors %}
+			<a class="btn btn-success" href="{{ path('actor_detail', {'id': actor.id })}}">{{ actor.name }}
+			</a>
+			<br><br>
 		{% endfor %}
-	</table>
+	</td>
+	<td>{{ movie.director.name }}</td>
+</tr></tr>{% endfor %}</table>
+{% endif %}
+
 </div>{% endblock %}
